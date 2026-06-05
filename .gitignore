@@ -53,3 +53,10 @@ styles/main.css
 styles/tablet.css
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode
+
+# Dependencies
+node_modules/
+
+# pnpm files
+pnpm-lock.yaml
+pnpm-workspace.yaml
