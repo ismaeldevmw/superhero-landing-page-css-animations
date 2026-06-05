@@ -36,9 +36,9 @@ jobs:
       - name: Build
         run: npm run sass:release
       - name: Archive Production Artifact
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v4
         with:
-          # Upload entire repository
+          name: github-pages
           path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
