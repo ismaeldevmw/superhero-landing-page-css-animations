@@ -31,14 +31,16 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-      - name: Install Dependencies
-        run: npm ci
+
+      - name: Install dependencies (CI)
+        run: npm ci --silent --no-audit --no-fund
+  
       - name: Build
         run: npm run build
 
-      - name: Remove symlinks and hard links
-        run: |
-          find ./public -type l -delete
+      # optional: remove symlinks that break Pages deploy
+      - name: Remove symlinks from public
+        run: find ./public -type l -delete || true
     
       - name: Archive Production Artifact
         uses: actions/upload-artifact@v4
