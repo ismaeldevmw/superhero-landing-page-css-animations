@@ -34,20 +34,36 @@ jobs:
 
       - name: Install dependencies (CI)
         run: npm install
-  
+
       - name: Build
         run: npm run build
 
-      # optional: remove symlinks that break Pages deploy
+      # optional: remove symlinks that break Pages deploy (if build outputs to ./public)
       - name: Remove symlinks from public
         run: find ./public -type l -delete || true
-    
-      - name: Archive Production Artifact
-        uses: actions/upload-artifact@v4
+
+      - name: Prepare Pages artifact (dereference symlinks)
+        run: |
+          if [ -d "./public" ]; then
+            rm -rf out || true
+            mkdir out
+            # rsync -aL copies files and follows symlinks (dereference)
+            rsync -aL ./public/ out/
+            echo "Prepared out/ (size):"
+            du -sh out || true
+            echo "Any remaining symlinks (should be none):"
+            find out -type l -ls || true
+          else
+            echo "Directory ./public not found. Nothing to upload."
+            ls -la || true
+            exit 1
+          fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          name: github-pages
-          path: './public'
-          compression-level: 6 
+          path: ./out
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
