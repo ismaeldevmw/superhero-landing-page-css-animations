@@ -32,14 +32,20 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
       - name: Build
         run: npm run build
+
+      - name: Remove symlinks and hard links
+        run: |
+          find ./public -type l -delete
+    
       - name: Archive Production Artifact
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
           path: './public'
+          compression-level: 6 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
