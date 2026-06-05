@@ -31,15 +31,17 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-      - name: Build CSS with Sass
-        run: npx sass styles/main.scss styles/main.css --no-source-map
+      - name: Install Dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Archive Production Artifact
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
-          path: '.'
+          path: './public'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
