@@ -7,7 +7,7 @@
     "sass:watch": "sass --no-source-map -w styles/main.scss:styles/main.css styles/tablet.scss:styles/tablet.css",
     "sass:debug": "sass --no-source-map  styles/main.scss:styles/main.css styles/tablet.scss:styles/tablet.css",
     "sass:release": "sass --style=compressed styles/main.scss:styles/main.css styles/tablet.scss:styles/tablet.css",
-    "build": "npm run sass:release && mkdir -p public && shx cp -r index.html styles/main.css styles/tablet.css scripts assets public/"
+    "build": "npm run sass:release && mkdir -p public/styles && shx cp -r index.html scripts assets public/ && shx cp styles/main.css styles/tablet.css public/styles/"
   },
   "repository": {
     "type": "git",
